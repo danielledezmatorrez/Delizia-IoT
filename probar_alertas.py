@@ -7,7 +7,15 @@ PORT   = 1883
 TOPICO = "delizia/produccion/ambiental"
 
 cliente = mqtt.Client(client_id="probador-alertas")
-cliente.connect(BROKER, PORT)
+
+# Validación: verificar conexión al broker MQTT
+try:
+    cliente.connect(BROKER, PORT)
+    print("✓ Conexión al broker MQTT exitosa")
+except Exception as e:
+    print(f"✗ No se pudo conectar al broker MQTT: {e}")
+    print("  Verifica que Mosquitto esté corriendo.")
+    exit(1)
 
 escenarios = {
     "1": {"nombre": "Normal",             "temperature_c": 24.0, "humidity_pct": 55.0, "co2_ppm": 750},
